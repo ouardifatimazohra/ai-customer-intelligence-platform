@@ -1,6 +1,6 @@
 [project]
 name = "ai-customer-intelligence-platform"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Plateforme Data Engineering, Machine Learning et Generative AI pour l'analyse et la prédiction du churn client."
 readme = "README.md"
 license = "MIT"
