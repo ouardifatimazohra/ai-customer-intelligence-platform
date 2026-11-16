@@ -4,13 +4,21 @@
 
 | Branche | Rôle | Fusion |
 |---|---|---|
-| `main` | Versions stables et démontrables, une par fin de sprint, taguées `vX.Y.Z` | Uniquement depuis `develop`, après validation explicite |
+| `main` | Versions stables et démontrables, une par fin de sprint, taguées `vX.Y.Z` | Uniquement depuis une branche `release/*`, après validation explicite |
 | `develop` | Intégration des fonctionnalités | Via Pull Request, CI verte |
 | `feature/<ID>-<slug>` | Une carte Trello = une branche (ex. `feature/DE-003-raw-ingestion`) | PR vers `develop` |
 | `fix/<ID>-<slug>` | Correction ciblée | PR vers `develop` |
 | `docs/<slug>` | Documentation seule | PR vers `develop` |
+| `release/vX.Y.Z` | Préparation d'une version | PR vers `develop`, puis vers `main` |
 
 On ne committe jamais directement sur `main` ni sur `develop`.
+
+### Publier une version (fin de sprint)
+
+1. Branche `release/vX.Y.Z` créée depuis `develop` : version passée à `X.Y.Z` dans `pyproject.toml` et `src/cip/__init__.py`, CHANGELOG daté.
+2. PR `release/vX.Y.Z → develop`, puis PR **`release/vX.Y.Z → main`** après validation de l'étudiante.
+   La PR vers `main` part de la branche `release/*` et **jamais de `develop`** : l'option GitHub « supprimer automatiquement les branches fusionnées » supprimerait sinon `develop`.
+3. Après la fusion dans `main`, l'étudiante crée le tag et la Release depuis l'interface GitHub (*Releases → Draft a new release*, tag `vX.Y.Z`, cible `main`).
 
 ## Messages de commit — Conventional Commits
 
