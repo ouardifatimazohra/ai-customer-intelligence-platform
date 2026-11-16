@@ -16,5 +16,8 @@ Chaque fichier est une capture **réelle**, prise automatiquement (navigateur Ch
 | `tests/S1_log_sample_DO-003.txt` | Extrait — Journal applicatif | Logs horodatés avec identifiant de lot et masquage automatique d'une clé API logguée par erreur. | exécution locale |
 | `tests/S1_dataset_download_DE-001.txt` | Extrait — Acquisition du dataset | Téléchargement depuis la source IBM, vérification SHA-256, réutilisation idempotente et rejet d'un fichier altéré. | exécution locale |
 | `tests/S1_postgres_migrations_DB-001.txt` | Extrait — Base PostgreSQL et migrations | Service Docker sain, migrations idempotentes, 4 schémas créés, table de traçabilité, message clair si la base est arrêtée. | exécution locale |
+| `eda/profiling_churn_distribution.png` | Figure — Répartition de la cible Churn (n = 7 043) | Déséquilibre des classes : 26,5 % de départs ; l'accuracy seule serait trompeuse. | `uv run cip data profile` |
+| `eda/profiling_numeric_distributions.png` | Figure — Distribution des variables numériques | Pics d'ancienneté aux extrêmes (0–1 et 72 mois), population à bas forfait, forte asymétrie des charges totales. | `uv run cip data profile` |
+| `eda/profiling_summary.json` | Données — Résumé de profilage | Source de tous les chiffres du dictionnaire de données (aucune saisie manuelle). | `uv run cip data profile` |
 
 Note : les commits produits par l'assistant apparaissent « Unverified » sur GitHub (signature non rattachée au compte de l'étudiante) ; les commits de fusion créés par GitHub apparaissent « Verified ».

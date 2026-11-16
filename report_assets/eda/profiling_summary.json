@@ -1,0 +1,268 @@
+{
+  "rows": 7043,
+  "columns": 21,
+  "column_names": [
+    "customerID",
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "tenure",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "MonthlyCharges",
+    "TotalCharges",
+    "Churn"
+  ],
+  "duplicate_rows": 0,
+  "columns_detail": {
+    "customerID": {
+      "blank_values": 0,
+      "distinct_values": 7043,
+      "leading_or_trailing_spaces": 0,
+      "kind": "identifier"
+    },
+    "gender": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "Female": 3488,
+        "Male": 3555
+      }
+    },
+    "SeniorCitizen": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "0": 5901,
+        "1": 1142
+      }
+    },
+    "Partner": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 3641,
+        "Yes": 3402
+      }
+    },
+    "Dependents": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 4933,
+        "Yes": 2110
+      }
+    },
+    "tenure": {
+      "blank_values": 0,
+      "distinct_values": 73,
+      "leading_or_trailing_spaces": 0,
+      "kind": "numeric",
+      "non_numeric_values": 0,
+      "min": 0.0,
+      "max": 72.0,
+      "mean": 32.3711,
+      "median": 29.0
+    },
+    "PhoneService": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 682,
+        "Yes": 6361
+      }
+    },
+    "MultipleLines": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 3390,
+        "No phone service": 682,
+        "Yes": 2971
+      }
+    },
+    "InternetService": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "DSL": 2421,
+        "Fiber optic": 3096,
+        "No": 1526
+      }
+    },
+    "OnlineSecurity": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 3498,
+        "No internet service": 1526,
+        "Yes": 2019
+      }
+    },
+    "OnlineBackup": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 3088,
+        "No internet service": 1526,
+        "Yes": 2429
+      }
+    },
+    "DeviceProtection": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 3095,
+        "No internet service": 1526,
+        "Yes": 2422
+      }
+    },
+    "TechSupport": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 3473,
+        "No internet service": 1526,
+        "Yes": 2044
+      }
+    },
+    "StreamingTV": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 2810,
+        "No internet service": 1526,
+        "Yes": 2707
+      }
+    },
+    "StreamingMovies": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 2785,
+        "No internet service": 1526,
+        "Yes": 2732
+      }
+    },
+    "Contract": {
+      "blank_values": 0,
+      "distinct_values": 3,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "Month-to-month": 3875,
+        "One year": 1473,
+        "Two year": 1695
+      }
+    },
+    "PaperlessBilling": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 2872,
+        "Yes": 4171
+      }
+    },
+    "PaymentMethod": {
+      "blank_values": 0,
+      "distinct_values": 4,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "Bank transfer (automatic)": 1544,
+        "Credit card (automatic)": 1522,
+        "Electronic check": 2365,
+        "Mailed check": 1612
+      }
+    },
+    "MonthlyCharges": {
+      "blank_values": 0,
+      "distinct_values": 1585,
+      "leading_or_trailing_spaces": 0,
+      "kind": "numeric",
+      "non_numeric_values": 0,
+      "min": 18.25,
+      "max": 118.75,
+      "mean": 64.7617,
+      "median": 70.35
+    },
+    "TotalCharges": {
+      "blank_values": 11,
+      "distinct_values": 6531,
+      "leading_or_trailing_spaces": 11,
+      "kind": "numeric",
+      "non_numeric_values": 0,
+      "min": 18.8,
+      "max": 8684.8,
+      "mean": 2283.3004,
+      "median": 1397.475
+    },
+    "Churn": {
+      "blank_values": 0,
+      "distinct_values": 2,
+      "leading_or_trailing_spaces": 0,
+      "kind": "categorical",
+      "modalities": {
+        "No": 5174,
+        "Yes": 1869
+      }
+    }
+  },
+  "duplicate_ids": 0,
+  "target": {
+    "counts": {
+      "No": 5174,
+      "Yes": 1869
+    },
+    "churn_rate": 0.2654
+  },
+  "total_charges_blank_tenures": [
+    "0"
+  ],
+  "tenure_zero_count": 11,
+  "consistency": {
+    "no_phone_service_iff_phone_service_no": true,
+    "no_internet_service_iff_internet_service_no": true,
+    "blank_total_charges_iff_tenure_zero": true,
+    "customer_id_format_NNNN-XXXXX": true
+  }
+}

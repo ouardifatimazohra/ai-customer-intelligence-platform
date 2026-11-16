@@ -8,6 +8,8 @@ requires-python = ">=3.12,<3.13"
 authors = [{ name = "Ouardi Fatima Zohra" }]
 # Les dépendances sont ajoutées carte par carte (uv add <paquet>), jamais par anticipation.
 dependencies = [
+    "matplotlib>=3.11.2",
+    "pandas>=3.1.1",
     "psycopg[binary]>=3.3.9",
     "pydantic-settings>=2.16.3",
     "sqlalchemy>=2.1.8",
