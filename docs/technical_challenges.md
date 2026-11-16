@@ -32,3 +32,12 @@ Chaque entrée décrit un problème **réellement rencontré**, sa cause, la sol
 ## S1-06 — Ergonomie : traceback quand la base est arrêtée
 - **Symptôme** : centaines de lignes de traceback si PostgreSQL n'est pas démarré.
 - **Solution** : message d'erreur explicite et code de sortie 3, couverts par un test unitaire.
+
+## S1-07 — Branche `develop` supprimée automatiquement à la release
+- **Symptôme** : après la fusion de la PR `develop → main` (v0.1.0), la branche `develop` avait disparu de GitHub.
+- **Cause** : l'option « Automatically delete head branches » supprime la branche source de toute PR fusionnée, y compris `develop`.
+- **Solution** : `develop` recréée exactement au même commit (`bfc22d2`, second parent du commit de fusion de `main`), sans aucune perte. Désormais, les PR vers `main` partent d'une branche `release/*` (CONTRIBUTING.md).
+
+## S1-08 — Tags et Releases réservés à l'étudiante
+- **Constat** : l'environnement de développement de l'assistant ne peut ni pousser de tag ni créer de Release GitHub (restriction volontaire du proxy).
+- **Décision** : ces actions de publication restent manuelles et sont faites par l'étudiante dans l'interface GitHub, ce qui garantit qu'aucune version n'est publiée sans elle.
