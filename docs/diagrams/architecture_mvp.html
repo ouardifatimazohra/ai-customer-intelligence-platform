@@ -1,0 +1,94 @@
+<!doctype html>
+<!-- Source de report_assets/diagrams/architecture_mvp.png (rendu par un navigateur sans interface). -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --surface:#fcfcfb; --plane:#f4f3ef; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+          --accent:#2a78d6; --accent-bg:#e8f0fb; --line:#c9c7c0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--surface); font-family: Arial, Helvetica, sans-serif; color:var(--ink); }
+  .wrap { width:1180px; padding:28px; display:grid; grid-template-columns: 1fr 190px; gap:18px; }
+  h1 { grid-column:1 / -1; margin:0 0 4px; font-size:22px; }
+  .sub { grid-column:1 / -1; margin:-6px 0 6px; color:var(--ink2); font-size:14px; }
+  .stack { display:flex; flex-direction:column; gap:0; }
+  .layer { background:var(--plane); border:1px solid var(--line); border-radius:10px; padding:12px 14px 14px; }
+  .layer h2 { margin:0 0 10px; font-size:13px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink2); }
+  .row { display:grid; gap:12px; }
+  .box { background:var(--accent-bg); border:1.5px solid var(--accent); border-radius:8px; padding:10px 12px; }
+  .box b { display:block; font-size:15px; margin-bottom:3px; }
+  .box span { font-size:12.5px; color:var(--ink2); line-height:1.35; display:block; }
+  .db { border-radius:16px; }
+  .link { display:flex; align-items:center; justify-content:center; gap:8px; height:34px; color:var(--ink2); font-size:12.5px; }
+  .link::before { content:""; width:2px; height:100%; background:var(--ink2); }
+  .link i { font-style:normal; background:var(--surface); padding:2px 8px; border:1px solid var(--line); border-radius:12px; }
+  .flow { display:flex; align-items:center; gap:8px; }
+  .flow .box { flex:1; text-align:center; }
+  .arrow { color:var(--ink2); font-size:20px; }
+  .side { display:flex; flex-direction:column; gap:12px; }
+  .side .layer { flex:1; }
+  .note { font-size:12px; color:var(--ink2); margin-top:8px; }
+  .tag { display:inline-block; font-size:11px; padding:1px 6px; border-radius:10px; border:1px solid var(--muted); color:var(--ink2); margin-top:5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Architecture MVP — AI Customer Intelligence Platform</h1>
+  <div class="sub">Vue en couches : chaque couche ne dépend que de la couche inférieure. L'interface n'accède jamais directement à la base.</div>
+
+  <div class="stack">
+    <div class="layer">
+      <h2>1 · Présentation</h2>
+      <div class="row" style="grid-template-columns:1fr">
+        <div class="box"><b>Interface Streamlit</b><span>Dashboard · Qualité · Analytics · Risque client · Explications SHAP · Assistant IA · Exécutions</span></div>
+      </div>
+    </div>
+    <div class="link"><i>HTTP / JSON uniquement</i></div>
+    <div class="layer">
+      <h2>2 · Services</h2>
+      <div class="row" style="grid-template-columns:1fr">
+        <div class="box"><b>API FastAPI</b><span>/ingestions · /quality · /analytics · /predictions · /explanations · /assistant · /models — validation Pydantic, OpenAPI, erreurs centralisées</span></div>
+      </div>
+    </div>
+    <div class="link"><i>appels de services Python</i></div>
+    <div class="layer">
+      <h2>3 · Traitements</h2>
+      <div class="row" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="box"><b>Pipeline de données</b><span>Validation de schéma (Pandera) · chargement traçable · règles Data Quality · transformations SQL</span><span class="tag">cip pipeline run</span></div>
+        <div class="box"><b>Machine Learning</b><span>scikit-learn · XGBoost · seuil selon le coût métier · explications SHAP</span><span class="tag">suivi MLflow</span></div>
+        <div class="box"><b>Assistant IA</b><span>RAG : embeddings locaux + FAISS, citations, abstention · Text-to-SQL : validation sqlglot, LIMIT, timeout</span><span class="tag">LLM Groq / mock</span></div>
+      </div>
+    </div>
+    <div class="link"><i>SQL — compte applicatif · compte lecture seule (assistant)</i></div>
+    <div class="layer">
+      <h2>4 · Données — PostgreSQL 16</h2>
+      <div class="flow">
+        <div class="box db"><b>raw</b><span>copie fidèle (TEXT)</span></div><div class="arrow">→</div>
+        <div class="box db"><b>staging</b><span>typé, nettoyé</span></div><div class="arrow">→</div>
+        <div class="box db"><b>analytics</b><span>tables + vues v_*</span></div>
+        <div style="width:18px"></div>
+        <div class="box db"><b>app</b><span>lots · qualité · modèles · prédictions · assistant</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="side">
+    <div class="layer">
+      <h2>Sources</h2>
+      <div class="box db"><b>CSV IBM Telco</b><span>7 043 clients fictifs · version figée SHA-256</span></div>
+      <div class="note">→ entre par le pipeline (couche 3), stocké dans <b>raw</b>.</div>
+    </div>
+    <div class="layer">
+      <h2>Transversal</h2>
+      <div class="box"><b>Configuration</b><span>.env · secrets masqués</span></div>
+      <div style="height:8px"></div>
+      <div class="box"><b>Logs</b><span>horodatés, par lot</span></div>
+      <div style="height:8px"></div>
+      <div class="box"><b>Docker Compose</b><span>postgres · api · ui · mlflow</span></div>
+      <div style="height:8px"></div>
+      <div class="box"><b>CI GitHub Actions</b><span>lint · tests Linux / Windows · intégration PostgreSQL</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

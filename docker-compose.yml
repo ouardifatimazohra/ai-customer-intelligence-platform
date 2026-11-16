@@ -1,0 +1,25 @@
+# Services de la plateforme. Démarrage : docker compose up -d
+# Les identifiants viennent de .env (copie de .env.example) ; aucune valeur réelle n'est versionnée.
+name: cip
+
+services:
+  postgres:
+    image: postgres:16.16-alpine
+    container_name: cip-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-cip}
+      POSTGRES_USER: ${POSTGRES_USER:-cip_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-local-only}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

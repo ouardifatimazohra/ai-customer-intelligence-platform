@@ -44,10 +44,10 @@ data/processed/*
 # ---------------------------------------------------------------
 # Artefacts ML / GenAI générés
 # ---------------------------------------------------------------
-mlruns/
-mlartifacts/
-artifacts/
-models/
+/mlruns/
+/mlartifacts/
+/artifacts/
+/models/
 *.joblib
 *.pkl
 *.faiss

@@ -1,0 +1,30 @@
+# Contrôles exécutés avant chaque commit (installation : uv run pre-commit install)
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: detect-private-key        # bloque les clés privées
+      - id: check-added-large-files   # bloque les fichiers > 500 Ko (ex. dataset)
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: forbid-env-files
+        name: interdire les fichiers .env
+        entry: "Fichier .env détecté : les secrets ne doivent jamais être versionnés."
+        language: fail
+        files: '(^|/)\.env(\..+)?$'
+        exclude: '\.env\.example$'
+      - id: ruff-check
+        name: ruff (lint)
+        entry: uv run ruff check --fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff (format)
+        entry: uv run ruff format
+        language: system
+        types: [python]

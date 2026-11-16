@@ -1,0 +1,7 @@
+# Extrait réel de log (DO-003) — généré le 16/11/2026 avec GROQ_API_KEY=gsk_demo_fake_key_123 (clé factice)
+# Démontre : horodatage ISO 8601, niveau, module, identifiant de lot propagé par contexte,
+# et masquage automatique d'un secret logué par erreur.
+2026-11-16T16:30:22+0000 INFO     cip.demo [ingestion_id=-] Démarrage du pipeline
+2026-11-16T16:30:22+0000 INFO     cip.demo [ingestion_id=7c9e6679-7425-40de-944b-e07fc1f90ae7] Lot chargé : 7043 lignes
+2026-11-16T16:30:22+0000 WARNING  cip.demo [ingestion_id=7c9e6679-7425-40de-944b-e07fc1f90ae7] Appel LLM avec la clé ***
+2026-11-16T16:30:22+0000 INFO     cip.demo [ingestion_id=-] Fin

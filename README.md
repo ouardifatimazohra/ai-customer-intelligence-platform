@@ -2,6 +2,8 @@
 
 Plateforme de bout en bout de **Data Engineering**, **Machine Learning** et **Generative AI** pour analyser les clients et prédire le churn (résiliation), avec un cas d'usage télécom basé sur le dataset public *IBM Telco Customer Churn*.
 
+[![CI](https://github.com/ouardifatimazohra/ai-customer-intelligence-platform/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ouardifatimazohra/ai-customer-intelligence-platform/actions/workflows/ci.yml)
+
 > Projet de fin d'année (PFA), cycle ingénieur informatique — 8 semaines.
 > **État actuel : sprint 1, initialisation du dépôt.** Les fonctionnalités ci-dessous sont **prévues** ; elles seront marquées comme livrées au fur et à mesure, avec preuves dans `docs/weekly_progress.md`.
 
@@ -23,14 +25,38 @@ Python 3.12 · uv · PostgreSQL 16 · Pandas · Pandera · scikit-learn · XGBoo
 
 ## Démarrage rapide (développement)
 
-Prérequis : [uv](https://docs.astral.sh/uv/) et Git.
+Prérequis : Git et [uv](https://docs.astral.sh/uv/). Installation de uv sous Windows (PowerShell) :
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+uv installe lui-même Python 3.12 si nécessaire.
 
 ```powershell
 git clone https://github.com/ouardifatimazohra/ai-customer-intelligence-platform.git
 cd ai-customer-intelligence-platform
 Copy-Item .env.example .env
 uv sync
+uv run pre-commit install   # contrôles automatiques avant chaque commit
 uv run cip
+```
+
+Base de données (Docker Desktop requis) :
+
+```powershell
+docker compose up -d postgres
+uv run cip db migrate
+uv run cip db status
+```
+
+Contrôles de qualité (les mêmes que la CI) :
+
+```powershell
+uv run ruff check .
+uv run ruff format --check .
+uv run pytest                  # tests unitaires
+uv run pytest -m integration   # nécessite PostgreSQL démarré
 ```
 
 ## Structure du dépôt

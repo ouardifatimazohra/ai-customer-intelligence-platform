@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint et format (Ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - name: Installer les dépendances verrouillées
+        run: uv sync --locked
+      - name: Ruff lint
+        run: uv run ruff check --output-format=github .
+      - name: Ruff format
+        run: uv run ruff format --check .
+
+  test:
+    name: Tests (${{ matrix.os }})
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        # Windows vérifie automatiquement la compatibilité avec le poste de développement
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - name: Installer les dépendances verrouillées
+        run: uv sync --locked
+      - name: Commande cip
+        run: uv run cip
+      - name: Pytest
+        run: uv run pytest --cov=cip --cov-report=term-missing
+
+  integration:
+    name: Tests d'intégration (PostgreSQL)
+    needs: lint
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16.16-alpine
+        env:
+          POSTGRES_DB: cip
+          POSTGRES_USER: cip_app
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cip_app -d cip"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: cip
+      POSTGRES_USER: cip_app
+      POSTGRES_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - name: Installer les dépendances verrouillées
+        run: uv sync --locked
+      - name: Migrations (2 passages, idempotence)
+        run: |
+          uv run cip db migrate
+          uv run cip db migrate
+          uv run cip db status
+      - name: Pytest intégration
+        run: uv run pytest -m integration
