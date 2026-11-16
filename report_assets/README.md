@@ -14,5 +14,6 @@ Chaque fichier est une capture **réelle**, prise automatiquement (navigateur Ch
 | `git/S1_pull_requests_closed.png` | Figure — Liste des Pull Requests | Workflow une carte = une branche = une PR. | onglet Pull requests |
 | `git/S1_pr2_do002_merged.png` | Figure — Pull Request #2 (DO-002) | Description structurée (objectif, changements, validation) et lien vers la carte Trello. | [PR #2](https://github.com/ouardifatimazohra/ai-customer-intelligence-platform/pull/2) |
 | `tests/S1_log_sample_DO-003.txt` | Extrait — Journal applicatif | Logs horodatés avec identifiant de lot et masquage automatique d'une clé API logguée par erreur. | exécution locale |
+| `tests/S1_dataset_download_DE-001.txt` | Extrait — Acquisition du dataset | Téléchargement depuis la source IBM, vérification SHA-256, réutilisation idempotente et rejet d'un fichier altéré. | exécution locale |
 
 Note : les commits produits par l'assistant apparaissent « Unverified » sur GitHub (signature non rattachée au compte de l'étudiante) ; les commits de fusion créés par GitHub apparaissent « Verified ».

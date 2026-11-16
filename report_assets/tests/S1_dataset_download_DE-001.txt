@@ -1,0 +1,16 @@
+# Exécution réelle (DE-001) — 16/11/2026 — téléchargement depuis la source IBM officielle
+# Démontre : téléchargement vérifié, réutilisation idempotente, contrôle d'empreinte, rejet d'un fichier altéré (code 2).
+=== 1er lancement : uv run cip data download
+2026-11-16T16:33:03+0000 INFO     cip.data.dataset [ingestion_id=-] Téléchargement de IBM Telco Customer Churn depuis https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv
+2026-11-16T16:33:03+0000 INFO     cip.data.dataset [ingestion_id=-] Dataset téléchargé et vérifié (970457 octets) : data/raw/telco_customer_churn.csv
+OK — data/raw/telco_customer_churn.csv (SHA-256 16320c9c1ec7…)
+=== 2e lancement (idempotent)
+2026-11-16T16:33:04+0000 INFO     cip.data.dataset [ingestion_id=-] Dataset déjà présent et conforme : data/raw/telco_customer_churn.csv
+OK — data/raw/telco_customer_churn.csv (SHA-256 16320c9c1ec7…)
+=== uv run cip data verify
+OK — data/raw/telco_customer_churn.csv conforme (SHA-256 16320c9c1ec72448db59aa0a26a0b95401046bef5d02fd3aeb906448e3055e91)
+=== après ajout d'une ligne au fichier : uv run cip data verify
+ÉCHEC — Empreinte SHA-256 inattendue pour telco_customer_churn.csv : attendu 16320c9c1ec72448db59aa0a26a0b95401046bef5d02fd3aeb906448e3055e91, obtenu a4c6e9190c36bb1e4484ca081db77e668b1563a74e3df7f49c921a13d6b3ea6d
+exit=2
+=== test réseau : uv run pytest -m network
+1 passed, 27 deselected
