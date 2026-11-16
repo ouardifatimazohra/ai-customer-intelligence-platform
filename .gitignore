@@ -1,0 +1,69 @@
+# ---------------------------------------------------------------
+# Secrets et configuration locale (ne JAMAIS versionner)
+# ---------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ---------------------------------------------------------------
+# Environnements Python
+# ---------------------------------------------------------------
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# ---------------------------------------------------------------
+# Outils (cache)
+# ---------------------------------------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------
+# Données : jamais versionnées (téléchargées et vérifiées par SHA-256)
+# ---------------------------------------------------------------
+data/raw/*
+data/interim/*
+data/processed/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# ---------------------------------------------------------------
+# Artefacts ML / GenAI générés
+# ---------------------------------------------------------------
+mlruns/
+mlartifacts/
+artifacts/
+models/
+*.joblib
+*.pkl
+*.faiss
+.cache/
+
+# Rapports qualité générés à l'exécution (les exemples retenus vont dans report_assets/)
+quality/reports/*
+!quality/reports/.gitkeep
+
+# ---------------------------------------------------------------
+# Systèmes / éditeurs
+# ---------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
