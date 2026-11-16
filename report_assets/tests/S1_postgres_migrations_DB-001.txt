@@ -1,0 +1,37 @@
+# Exécution réelle (DB-001) — 16/11/2026 — PostgreSQL 16.16 lancé par docker compose
+# Démontre : service sain (healthcheck), migrations appliquées une seule fois (idempotence),
+# 4 couches de données créées, traçabilité des migrations, tests d'intégration verts.
+=== docker compose ps
+NAME           IMAGE                   STATUS                   PORTS
+cip-postgres   postgres:16.16-alpine   Up 6 seconds (healthy)   0.0.0.0:5432->5432/tcp
+=== cip db status (avant)
+en attente   0001_create_schemas.sql
+=== cip db migrate (1er passage)
+2026-11-16T16:38:14+0000 INFO     cip.db.migrate [ingestion_id=-] Application de la migration 0001_create_schemas.sql
+2026-11-16T16:38:14+0000 INFO     cip.db.migrate [ingestion_id=-] Migrations : 1 appliquée(s), base à jour
+OK — 1 migration(s) appliquée(s) : 0001_create_schemas.sql
+=== cip db migrate (2e passage)
+2026-11-16T16:38:14+0000 INFO     cip.db.migrate [ingestion_id=-] Migrations : 0 appliquée(s), base à jour
+OK — base déjà à jour
+=== cip db status (après)
+appliquée    0001_create_schemas.sql
+=== psql \dn
+        List of schemas
+   Name    |       Owner
+-----------+-------------------
+ analytics | cip_app
+ app       | cip_app
+ public    | pg_database_owner
+ raw       | cip_app
+ staging   | cip_app
+(5 rows)
+=== SELECT ... FROM app.schema_migration
+ version |        filename         |   checksum   |          applied_at
+---------+-------------------------+--------------+-------------------------------
+       1 | 0001_create_schemas.sql | 118fe18f6bbf | 2026-11-16 16:38:14.204408+00
+=== uv run pytest -m integration
+5 passed, 33 deselected
+=== base arrêtée : uv run cip db status
+ÉCHEC — PostgreSQL injoignable : connection failed: connection to server at "127.0.0.1", port 5432 failed: Connection refused
+Vérifier que le service tourne (`docker compose up -d postgres`) et les variables POSTGRES_* du fichier .env.
+exit=3

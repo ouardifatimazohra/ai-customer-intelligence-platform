@@ -42,12 +42,21 @@ uv run pre-commit install   # contrôles automatiques avant chaque commit
 uv run cip
 ```
 
+Base de données (Docker Desktop requis) :
+
+```powershell
+docker compose up -d postgres
+uv run cip db migrate
+uv run cip db status
+```
+
 Contrôles de qualité (les mêmes que la CI) :
 
 ```powershell
 uv run ruff check .
 uv run ruff format --check .
-uv run pytest
+uv run pytest                  # tests unitaires
+uv run pytest -m integration   # nécessite PostgreSQL démarré
 ```
 
 ## Structure du dépôt
