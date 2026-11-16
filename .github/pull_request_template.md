@@ -5,7 +5,7 @@
 <!-- Ce que cette PR réalise et pourquoi. -->
 
 ## Changements
-- 
+-
 
 ## Validation
 - [ ] `uv run ruff check .` sans erreur
@@ -14,7 +14,7 @@
 - [ ] Aucun secret, donnée ou environnement virtuel ajouté (`git diff --cached --stat`)
 
 ## Documentation et preuves
-- [ ] `docs/` mis à jour : 
-- [ ] Preuves dans `report_assets/` : 
+- [ ] `docs/` mis à jour :
+- [ ] Preuves dans `report_assets/` :
 
 ## Limites / suites
