@@ -7,7 +7,9 @@ license = "MIT"
 requires-python = ">=3.12,<3.13"
 authors = [{ name = "Ouardi Fatima Zohra" }]
 # Les dépendances sont ajoutées carte par carte (uv add <paquet>), jamais par anticipation.
-dependencies = []
+dependencies = [
+    "pydantic-settings>=2.16.3",
+]
 
 [project.scripts]
 cip = "cip.__main__:main"
