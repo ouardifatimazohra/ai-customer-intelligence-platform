@@ -8,7 +8,9 @@ requires-python = ">=3.12,<3.13"
 authors = [{ name = "Ouardi Fatima Zohra" }]
 # Les dépendances sont ajoutées carte par carte (uv add <paquet>), jamais par anticipation.
 dependencies = [
+    "psycopg[binary]>=3.3.9",
     "pydantic-settings>=2.16.3",
+    "sqlalchemy>=2.1.8",
     "typer>=0.29.1",
 ]
 
@@ -50,7 +52,7 @@ select = ["E", "W", "F", "I", "B", "UP", "S", "SIM"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra --strict-markers -m 'not network'"
+addopts = "-ra --strict-markers -m 'not network and not integration'"
 markers = [
     "integration: tests nécessitant des services externes (PostgreSQL...)",
     "network: tests accédant à Internet (exclus par défaut ; lancer avec -m network)",

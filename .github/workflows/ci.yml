@@ -45,3 +45,38 @@ jobs:
         run: uv run cip
       - name: Pytest
         run: uv run pytest --cov=cip --cov-report=term-missing
+
+  integration:
+    name: Tests d'intégration (PostgreSQL)
+    needs: lint
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16.16-alpine
+        env:
+          POSTGRES_DB: cip
+          POSTGRES_USER: cip_app
+          POSTGRES_PASSWORD: ci-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cip_app -d cip"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: cip
+      POSTGRES_USER: cip_app
+      POSTGRES_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+      - name: Installer les dépendances verrouillées
+        run: uv sync --locked
+      - name: Migrations (2 passages, idempotence)
+        run: |
+          uv run cip db migrate
+          uv run cip db migrate
+          uv run cip db status
+      - name: Pytest intégration
+        run: uv run pytest -m integration
