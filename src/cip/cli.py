@@ -4,6 +4,7 @@ Exemples :
     cip --version
     cip data download
     cip data verify
+    cip data profile
     cip db migrate
     cip db status
 """
@@ -80,6 +81,29 @@ def data_download(
         typer.secho(f"ÉCHEC — {exc}", fg=typer.colors.RED, err=True)
         raise typer.Exit(code=2) from exc
     typer.secho(f"OK — {path} (SHA-256 {TELCO_CHURN.sha256[:12]}…)", fg=typer.colors.GREEN)
+
+
+@data_app.command("profile")
+def data_profile(
+    dest: Annotated[Path, typer.Option(help="Dossier contenant le dataset.")] = DEFAULT_RAW_DIR,
+    out: Annotated[Path, typer.Option(help="Dossier de sortie.")] = Path("report_assets/eda"),
+) -> None:
+    """Profile le dataset brut : résumé JSON + figures pour le rapport."""
+    from cip.data.figures import churn_distribution, numeric_distributions
+    from cip.data.profiling import load_raw, profile, save_profile
+
+    path = dest / TELCO_CHURN.filename
+    verify_file(path, TELCO_CHURN.sha256)  # on ne profile que la version figée
+    df = load_raw(path)
+    result = profile(df)
+    save_profile(result, out / "profiling_summary.json")
+    churn_distribution(df, out / "profiling_churn_distribution.png")
+    numeric_distributions(df, out / "profiling_numeric_distributions.png")
+    typer.secho(
+        f"OK — {result['rows']} lignes, {result['columns']} colonnes, "
+        f"taux de churn {result['target']['churn_rate']:.2%} → {out}",
+        fg=typer.colors.GREEN,
+    )
 
 
 @data_app.command("verify")
