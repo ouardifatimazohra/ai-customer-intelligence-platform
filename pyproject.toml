@@ -9,6 +9,7 @@ authors = [{ name = "Ouardi Fatima Zohra" }]
 # Les dépendances sont ajoutées carte par carte (uv add <paquet>), jamais par anticipation.
 dependencies = [
     "pydantic-settings>=2.16.3",
+    "typer>=0.29.1",
 ]
 
 [project.scripts]
@@ -49,7 +50,8 @@ select = ["E", "W", "F", "I", "B", "UP", "S", "SIM"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra --strict-markers"
+addopts = "-ra --strict-markers -m 'not network'"
 markers = [
     "integration: tests nécessitant des services externes (PostgreSQL...)",
+    "network: tests accédant à Internet (exclus par défaut ; lancer avec -m network)",
 ]

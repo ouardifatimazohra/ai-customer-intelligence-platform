@@ -7,17 +7,20 @@ import re
 import subprocess
 import sys
 
+from typer.testing import CliRunner
+
 import cip
-from cip.__main__ import main
+from cip.cli import app
 
 
 def test_package_exposes_semver_like_version() -> None:
     assert re.fullmatch(r"\d+\.\d+\.\d+(\.dev\d+)?", cip.__version__)
 
 
-def test_cli_main_prints_version(capsys) -> None:
-    main()
-    assert cip.__version__ in capsys.readouterr().out
+def test_cli_version_option() -> None:
+    result = CliRunner().invoke(app, ["--version"])
+    assert result.exit_code == 0
+    assert cip.__version__ in result.output
 
 
 def test_module_is_executable_with_python_m() -> None:
