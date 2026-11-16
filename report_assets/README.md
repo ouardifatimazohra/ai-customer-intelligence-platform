@@ -19,5 +19,6 @@ Chaque fichier est une capture **réelle**, prise automatiquement (navigateur Ch
 | `eda/profiling_churn_distribution.png` | Figure — Répartition de la cible Churn (n = 7 043) | Déséquilibre des classes : 26,5 % de départs ; l'accuracy seule serait trompeuse. | `uv run cip data profile` |
 | `eda/profiling_numeric_distributions.png` | Figure — Distribution des variables numériques | Pics d'ancienneté aux extrêmes (0–1 et 72 mois), population à bas forfait, forte asymétrie des charges totales. | `uv run cip data profile` |
 | `eda/profiling_summary.json` | Données — Résumé de profilage | Source de tous les chiffres du dictionnaire de données (aucune saisie manuelle). | `uv run cip data profile` |
+| `diagrams/architecture_mvp.png` | Figure — Architecture MVP en couches | Séparation présentation / services / traitements / données ; l'interface ne parle qu'à l'API ; couches de données RAW → STAGING → ANALYTICS + APP. | `docs/diagrams/architecture_mvp.html` |
 
 Note : les commits produits par l'assistant apparaissent « Unverified » sur GitHub (signature non rattachée au compte de l'étudiante) ; les commits de fusion créés par GitHub apparaissent « Verified ».
